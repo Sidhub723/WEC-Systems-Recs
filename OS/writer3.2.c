@@ -46,7 +46,7 @@ int main()
     rejected:
     while(1)
     {
-        
+
         if(addr_cpy[0] == '@' || addr_cpy[1] == '@' || addr_cpy[2] == '@') // means reading is being done!
         {
             
@@ -60,16 +60,19 @@ int main()
         //read(0,inputs,100);
         fgets(inputs,100,stdin);
         strtok(inputs,"\n");
-        //strcpy(shared_mem_addr,"$$$");                         // writing dollar to indicate that writing is going on
-        //addr_cpy = addr_cpy + 3;
+                                                          // writing dollar to indicate that writing is going on
+        
         if(strcmp(inputs,"STOP") == 0)
         {
             printf("Stopped the writing process!");
-            strcpy((char *)shared_mem_addr,"   ");                         // cleaning up the characters there to indicate that the memory space is 
-            char *tempaddr = shared_mem_addr;              
-            
+                                                             
+            char *tempaddr = shared_mem_addr;               
+            for(int i = 0;i<=3;i++){
+                tempaddr[i] = ' ';                              // cleaning up the characters there to indicate that the memory space is 
+
+            }
             printf("The total stuff in the buffer is ");
-            for(int i = 0;i<BUF_SIZE;i++){
+            for(int i = 0;i<(BUF_SIZE+20);i++){
                 printf("%c",tempaddr[i]);
             }
             break;                                                 // now open and free for all
@@ -87,8 +90,8 @@ int main()
             //*(addr_cpy + BUF_SIZE) = '\0';
             printf("Adress after print %p \n",addr_cpy);
             //printf("The total stuff in the buffer is %s",tempaddr);
-            printf("shared mem address is %p \n",shared_mem_addr);
-            printf("temp address is %p \n",tempaddr);
+            //printf("shared mem address is %p \n",shared_mem_addr);
+            //printf("temp address is %p \n",tempaddr);
             printf("The total stuff in the buffer is :");
             for(int i = 0;i<=(BUF_SIZE+20);i++){
                 printf("%c",tempaddr[i]);

@@ -23,17 +23,15 @@ int main()
 
     printf("Crossed it!");
 
-
     int overflow = 0;
     while(1){
         
         if(addr_cpy[0] == '$' || addr_cpy[1] == '$' || addr_cpy[2] == '$'){
-            
+           
             printf("Please wait! \n");
-            ]
+            
             sleep(3);
-            //goto repeat;
-            //break;
+            
         } 
         else if(addr_cpy[0] == '^' || addr_cpy[1] == '^' || addr_cpy[2] == '^'){
             
@@ -43,33 +41,42 @@ int main()
                     printf("%c",addr_cpy[i]);
                 }
                 printf("\n");
-                strcpy(addr_cpy,"$$$");                                             //nice idea
-                
+                strcpy(addr_cpy,"$$$");
+                //overflow++;
             }
 
 
         }
         else{
-
-            strcpy(addr_cpy,"@@@");
-            char reply[10];
-            printf("The data in the shared emmory segment is given below : \n");
+            
             char *tempaddr = (char *)shared_mem_addr;
-            for(int i = 0;i<BUF_SIZE;i++){
+            //strcpy(addr_cpy,"@@@");
+            for(int i =  0;i<=3;i++){
+                tempaddr[i] = '@';          //to indicate that reading is being done
+            }
+            
+            printf("The data in the shared emmory segment is given below : \n");
+            
+            for(int i = 0;i<(BUF_SIZE+20);i++){
                 printf("%c",tempaddr[i]);
             }
             printf("\n");
+            char reply[10];
             printf("Type STOP to stop reading \n");
             fgets(reply,10,stdin);
             strtok(reply,"\n");
 
             if(strcmp(reply,"STOP") == 0){
-                printf("The reading process has stopped");
-                strcpy(shared_mem_addr,"   ");
-                for(int i = 0;i<BUF_SIZE;i++){
+                printf("The reading process has stopped \n ");
+                //strcpy(shared_mem_addr,"   ");
+                for(int i =0;i<=3;i++ ){
+                    tempaddr[i] = ' ';
+                }
+                printf("The '@' at the beginning shouldve gone now \n");
+                for(int i = 0;i<(BUF_SIZE+20);i++){
                     printf("%c",tempaddr[i]);
                 }
-
+                //printf("Now the data at the shared segment is :%s",(char *)shared_mem_addr);
                 goto end;
             }
         }
@@ -81,4 +88,3 @@ int main()
 
     
 }
-
