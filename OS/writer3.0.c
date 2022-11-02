@@ -36,8 +36,8 @@ int main()
     int shmid;
     char *addr_cpy;
     //key_t keyy = 1234;
-    shmid = shmget((key_t)1234,BUF_SIZE,0666|IPC_CREAT|IPC_EXCL);
-    shared_mem_addr = shmat(shmid,NULL,0);
+    shmid = shmget((key_t)1234,BUF_SIZE,0666|IPC_CREAT|IPC_EXCL);           // creating a segment and getting its id
+    shared_mem_addr = shmat(shmid,NULL,0);                                  //returns the address of the segment which gets attached to the process
     addr_cpy = (char *)shared_mem_addr;
     if(shmid == -1){
         printf("The memory segment already exists, shmid is %d \n",shmid);
@@ -47,14 +47,14 @@ int main()
         printf("Now proper shmid is %d \n",shmid);
     }
     else {
-        strcpy(addr_cpy,"$$$");      // if the segment is created succesfully, them immediatrly add our semaphore $$$ to it            
+        strcpy(addr_cpy,"$$$");      // if the segment is created successfully, them immediately add our semaphore $$$ to it            
         addr_cpy = addr_cpy + 3;     // to indicate that it is under use
     }
     
     printf("ID if shared memory is %d \n",shmid);
     printf("Address of shared memory is %p \n",shared_mem_addr);
 
-    //char *addr_cpy = (char *)shared_mem_addr;
+    
     int printed = 0;
     memset(shared_mem_addr,1,BUF_SIZE);
     //strcpy(addr_cpy,"$$$");                 // copying the indicator dollar must be done only if shared memory segment is being created
@@ -81,7 +81,7 @@ int main()
 
         char inputs[100];
         printf("Enter some data into the buffer. Type 'STOP' to pause writing \n");
-        //read(0,inputs,100);
+        
         fgets(inputs,100,stdin);
         strtok(inputs,"\n");
         strcpy(shared_mem_addr,"$$$");                         // writing dollar to indicate that writing is going on
@@ -89,14 +89,14 @@ int main()
         if(strcmp(inputs,"STOP") == 0)
         {
             printf("Stopped the writing process!");
-            strcpy((char *)shared_mem_addr,"   ");                         // cleaning up the characters there to indicate that the memory space is 
-            char *tempaddr = shared_mem_addr;               // MAKE ONLY THE FIRST THREE CHARACTERS INTO NON '$' AND REST SHALL BE FINE
+            strcpy((char *)shared_mem_addr,"   ");           // cleaning up the characters there to indicate that the memory space is not under use
+            char *tempaddr = shared_mem_addr;               
             
             printf("The total stuff in the buffer is ");
             for(int i = 0;i<BUF_SIZE;i++){
                 printf("%c",tempaddr[i]);
             }
-            break;                                                 // now open and free for all
+            break;                                                 
         }
         else if(printed <= BUF_SIZE)
         {
@@ -132,4 +132,4 @@ int main()
 }
 
 //buffer seemingly had infinite length?!?! even though length specified in
-// can write a signal handler for SIGKILL or SIGINT and make it do the same thing as 'STOP'
+//can write a signal handler for SIGKILL or SIGINT and make it do the same thing as 'STOP'

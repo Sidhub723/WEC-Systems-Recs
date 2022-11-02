@@ -17,23 +17,22 @@ int main()
     printf("ID of shared memory segment is %d \n",shmid);
     shared_mem_addr = shmat(shmid,NULL,0);
     printf("The address of the memory segment is %p \n",shared_mem_addr);
-    //printf("Data present at that memory location is : %s \n",(char *)shared_mem_addr);
-    printf("The memory is being written, please wait! \n");
+    
    
     char *addr_cpy = shared_mem_addr;
-    //printf("first character :%c \n",addr_cpy[0]);
+    
     printf("Crossed it!");
 
-    //int waitcount = 0;
+
 
     while(1){
         char *addr_cpy = shared_mem_addr;
-        //printf("Inside loop ji %d",waitcount);
+        
         
         if(addr_cpy[0] == '$' || addr_cpy[1] == '$' || addr_cpy[2] == '$'){
             //repeat:
-            printf("Please wait! \n");
-            //printf("The memory is being written, please wait!");
+            printf("The memory is being written, please wait! \n");
+            
             sleep(3);
             //goto repeat;
             //break;
@@ -47,10 +46,7 @@ int main()
 
         }
         else{
-            //printf("We're in the else part boys!");
-            /*if(waitcount > 4){
-                printf("Thank you for waiting! You can now read the text! \n");
-            }*/
+            
 
             strcpy(addr_cpy,"@@@");
             char reply[10];
@@ -70,7 +66,7 @@ int main()
                 for(int i = 0;i<BUF_SIZE;i++){
                     printf("%c",tempaddr[i]);
                 }
-                //printf("Now the data at the shared segment is :%s",(char *)shared_mem_addr);
+                
                 goto end;
             }
         }
@@ -83,14 +79,4 @@ int main()
     
 }
 
-/*int waitcount = 0;
-while(addr_cpy[0] == '$' || addr_cpy[1] == '$' || addr_cpy[2] == '$'){
-    if(waitcount == 0){
-        printf("Please wait, the memory segment is being used!");
-        
-    }
-    
 
-}
-printf("Out of while!");
-} */
