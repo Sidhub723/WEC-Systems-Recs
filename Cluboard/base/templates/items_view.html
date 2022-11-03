@@ -1,0 +1,15 @@
+{% extends 'main.html' %}
+{% load can_user_access_tag %}
+{% block title %}Items{% endblock title %}
+
+{% block body %}
+
+
+{% include 'items_slider.html' %}
+{% include 'requests_table.html' %}
+<!-- <script>
+    $(document).ready( function () {
+        $('#items_table').DataTable();
+    } );
+</script> -->
+{% endblock body %}

@@ -1,0 +1,178 @@
+<!-- This template acts as a base for all templates -->
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!--DataTable  -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
+
+    <title>{% block title %}{% endblock title %} | InvManage</title>
+    <style>
+        body {
+            background-color: black;
+            font-family: 'Nunito', sans-serif;
+            color: white;
+        }
+
+        .card_item {
+            background-color: #25274D;
+            color: white;
+        }
+
+        .card {
+            background-color: black;
+        }
+
+        a,
+        p {
+            color: white;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: rgb(180, 175, 175);
+        }
+
+        th,
+        td {
+            color: white;
+        }
+
+        .table_head {
+            background-color: #25274D !important;
+        }
+
+        .table-striped>tbody>tr:nth-child(odd)>td,
+        .table-striped>tbody>tr:nth-child(odd)>th {
+            background-color: rgb(37, 36, 36);
+        }
+
+        input[type=text],
+        input[type=number],
+        input[type=email],
+        input[type=password],
+        #id_club,#id_requested_by,#id_item, #id_designation,
+        select,
+        textarea {
+            margin-right: 3px;
+            border: 1px solid rgb(51, 47, 47);
+            border-radius: 5px;
+            padding: 8px;
+            background-color: rgb(29, 27, 27);
+            color: white;
+
+        }
+
+        button, .coloured-button {
+            border: 1px solid rgb(51, 47, 47);
+            background-color: #25274D;
+            color: white;
+            padding: 10px;
+            font-size: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .button {
+            border: 1px solid rgb(51, 47, 47);
+            background-color: rgb(235, 47, 47);
+            color: white;
+            padding: 10px;
+            font-size: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        label, .form_label{
+            width: 20%;
+        }
+
+        .neumorphism-card {
+            border-radius: 20px;
+            background: linear-gradient(145deg, #101010, #131313);
+            box-shadow:  12px 12px 24px #0f0f0f,
+                        -12px -12px 24px #151515;
+            padding: 20px;
+        }
+
+        .dataTables_length, .dataTables_filter, .dataTables_info,
+        .dataTables_paginate {
+            color: white !important;
+        }
+
+        #items-button,
+        #users-button{
+            display: inline-block;
+            vertical-align: top;
+        }
+        .centered-div {
+            width: 50%;
+            margin: auto;
+        }
+
+        .centered-text {
+            margin: auto;
+            width: 50%;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        /* input[type=file]{
+            display: none;
+        } */
+
+       
+    </style>
+</head>
+{% load can_user_access_tag %}
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">InvManage</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'profile' request.user.id %}">Profile</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show my-0" role="alert">
+        <strong>{{ message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% include 'club_card.html' %}
+
+    {% block body %}{% endblock body %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+</body>
+</html>
